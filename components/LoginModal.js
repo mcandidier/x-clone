@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useState} from 'react'
 import {TextField, Button} from '@mui/material';
 import styled from 'styled-components';
-import Cookies from "js-cookie";
 import { useRouter } from 'next/router';
 
 function LoginModal({setOpen, setOpenRegister}) {
@@ -27,16 +26,13 @@ function LoginModal({setOpen, setOpenRegister}) {
         }
       );
       const token = res.data.token;
-      const csrftoken = Cookies.get("csrftoken");
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      axios.defaults.headers.post["X-CSRFToken"] = csrftoken;
-      Cookies.set("token", token);
+      localStorage.setItem('token', token);
       setHasError(false);
       setOpen(false);
+
       // redirect the user to the dashboard page
-      router.push('/dashboard');
+      router.push('/');
     } catch (err) {
-      console.log(err);
       setHasError(true);
     }
   }

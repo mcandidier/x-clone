@@ -7,14 +7,13 @@ import store from '../store';
 export default function App({ 
     Component, 
     pageProps: {...pageProps },
-    data,
   }) {
 
   return (
       <Provider store={store}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </Provider>
   ) 
 }

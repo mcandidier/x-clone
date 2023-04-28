@@ -1,10 +1,15 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 
-function SidebarItem({label, href, icon: Icon}) {
+function SidebarItem({label, href, icon: Icon, logout}) {
   const router = useRouter()
   const handleClick = () => {
-    router.push(href)
+    if(logout) {
+      localStorage.removeItem('token'); // removed!
+      router.push('/login')
+    } else {
+      router.push(href)
+    }
   }
 
   return (
@@ -29,7 +34,7 @@ function SidebarItem({label, href, icon: Icon}) {
         <div className='flex justify-center items-center'>
           <p className='xs:hidden text-md text-white'>{label}</p>
         </div>
-    </div>
+    </div> 
   )
 }
 

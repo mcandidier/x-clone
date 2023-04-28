@@ -11,17 +11,17 @@ function Sidebar() {
     {
       label: 'Home',
       href: '/',
-      icon: <BsHouseFill/>
+      icon: <BsHouseFill className='text-white'/>
     },
     {
       label: 'Notifications',
       href: '/notifications',
-      icon: <BsBellFill/>
+      icon: <BsBellFill className='text-white'/>
     },
     {
       label: 'Profile',
       href: '/profile/123',
-      icon: <FaUser/>
+      icon: <FaUser className='text-white'/>
     }
   ]
   return (
@@ -35,7 +35,7 @@ function Sidebar() {
                 label={item.label}
                 icon={item.icon}/>
             })}
-            <SidebarItem icon={<BiLogOut/>} label={'Logout'} href={'/logout'}></SidebarItem>
+            <SidebarItem icon={<BiLogOut className='text-white'/>} label={'Logout'} logout={true}></SidebarItem>
           </div>
           <div className='
                 lg:w-[230px]

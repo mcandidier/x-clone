@@ -22,8 +22,6 @@ function CommonDialog({open, setOpen, component:Component, title, size}) {
       <Dialog  open={open} 
         fullWidth
         maxWidth={size} 
-        disableBackdropClick={true}
-        disableEscapeKeyDown={true}
         onClose={handleOnClose}
         className='bg-neutral-700 bg-opacity-70'> 
         <DialogTitle id={title} className='bg-black'>
