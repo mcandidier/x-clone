@@ -3,6 +3,9 @@ import React, { useState} from 'react'
 import {TextField, Button} from '@mui/material';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
+import { setCookie } from 'nookies';
+
+
 
 function LoginModal({setOpen, setOpenRegister}) {
   const [hasError, setHasError]  = useState(false);
@@ -26,7 +29,12 @@ function LoginModal({setOpen, setOpenRegister}) {
         }
       );
       const token = res.data.token;
-      localStorage.setItem('token', token);
+      // localStorage.setItem('token', token);
+      setCookie(null, 'token', token, {
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+        path: '/',
+      });
+
       setHasError(false);
       setOpen(false);
 
