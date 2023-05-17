@@ -1,11 +1,15 @@
-import React from 'react'
-import { useRouter } from 'next/router'
+import React from 'react';
+import { useRouter } from 'next/router';
+import { destroyCookie } from 'nookies';
+
 
 function SidebarItem({label, href, icon: Icon, logout}) {
   const router = useRouter()
   const handleClick = () => {
     if(logout) {
-      localStorage.removeItem('token'); // removed!
+
+      destroyCookie(null, 'token');
+      destroyCookie(null, 'csrftoken');
       router.push('/login')
     } else {
       router.push(href)
