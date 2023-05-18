@@ -1,22 +1,25 @@
+import React from 'react';
+
+
 import Header from '@/components/Header';
 import { useRouter } from 'next/router';
-import React from 'react';
 import { ClipLoader } from 'react-spinners';
+
+import { fetchUser } from '@/hooks/fetchUser';
+
 
 function UserView() {
   const router = useRouter();
   const {userId} = router.query;
-  console.log(router.query)
-  console.log(userId, 'userID')
 
-  // const {data, isLoading} = fetchUser(userId);
-  // console.log(data, isloading)
+  const {data, isLoading, error} = fetchUser(userId);
 
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
 
-  if (true) {
+  console.log(data, 'data')
+  if (isLoading) {
     return (
       <div className='flex justify-center items-center h-full'>
         <ClipLoader color='lightblue' size={42} />
@@ -28,6 +31,7 @@ function UserView() {
   return (
     <>
       <Header label='User Profile'/>
+      {data?.bio}
     </>
   );
 }

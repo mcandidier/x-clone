@@ -1,16 +1,16 @@
 import useSWR from 'swr';
+import API from '@/libs/api';
 
-import fetcher from '@/libs/fetcher';
+
+const fetcher = url => API.get(url).then(res => res.data)
+
 
 const fetchUser = (userId) => {
-    const {data, error, isLoading, mutate} = useSWR(`api/users/${userId}/`)
+    const {data, error, isLoading} = useSWR(`/users/${userId}/`, fetcher)
+    return { data, error, isLoading}
 }
 
-return {
-    data,
-    error,
-    isLoading,
-    mutate
-}
 
-export default fetchUser;
+export {
+    fetchUser
+};
