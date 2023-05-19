@@ -5,8 +5,14 @@ import { BiLogOut} from 'react-icons/bi';
 import SidebarLogo from './SidebarLogo';
 import SidebarItem from './SidebarItem';
 
+import { useSelector } from 'react-redux';
+
 
 function Sidebar() {
+
+  const user = useSelector((state) => state.auth)
+  console.log(user, 'user');
+  
   const items = [
     {
       label: 'Home',
@@ -35,7 +41,11 @@ function Sidebar() {
                 label={item.label}
                 icon={item.icon}/>
             })}
-            <SidebarItem icon={<BiLogOut className='text-white'/>} label={'Logout'} logout={true}></SidebarItem>
+
+            { user &&
+              <SidebarItem icon={<BiLogOut className='text-white'/>} label={'Logout'} logout={true}></SidebarItem>
+            }
+          
           </div>
           <div className='
                 lg:w-[230px]

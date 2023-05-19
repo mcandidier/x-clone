@@ -7,11 +7,15 @@ import { setCookie } from 'nookies';
 import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { setCurrentUser } from '@/store/user-slice';
 
 
 function RegisterModal({setOpen, setOpenRegister}) {
   const { handleSubmit, register, formState: { errors }, setError } = useForm();
   const router = useRouter();
+
+  const dispatch = useDispatch();
 
 
   const onSubmit = async (data) => {
@@ -22,11 +26,10 @@ function RegisterModal({setOpen, setOpenRegister}) {
         maxAge: 30 * 24 * 60 * 60, // 30 days
         path: '/',
       });
+      dispatch(setCurrentUser(res.data))
       toast.success('Account successfully created')
       router.push('/');
     } catch (err) {
-      // todo: handle form validation from server
-      console.log('err', err);
       toast.error('Something went wrong.')
       Object.keys(err.response.data).forEach((field) => {
         setError(field, {

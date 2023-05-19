@@ -4,12 +4,15 @@ import {TextField, Button} from '@mui/material';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { setCookie } from 'nookies';
-
-
+import { setCurrentUser } from '@/store/user-slice';
+import { useDispatch } from 'react-redux';
 
 function LoginModal({setOpen, setOpenRegister}) {
   const [hasError, setHasError]  = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
+
+
   const handleInputChange = (e) => {
     setCredentials({
       ...credentials,
@@ -19,7 +22,6 @@ function LoginModal({setOpen, setOpenRegister}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('submit');
     try {
       const res = await axios.post(
         "http://localhost:8000/api/accounts/login/",
@@ -29,11 +31,12 @@ function LoginModal({setOpen, setOpenRegister}) {
         }
       );
       const token = res.data.token;
-      // localStorage.setItem('token', token);
       setCookie(null, 'token', token, {
         maxAge: 30 * 24 * 60 * 60, // 30 days
         path: '/',
       });
+
+      dispatch(setCurrentUser(res.data));
 
       setHasError(false);
       setOpen(false);

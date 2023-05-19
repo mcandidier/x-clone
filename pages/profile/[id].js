@@ -44,6 +44,7 @@ export const getServerSideProps = async (context) => {
     const data = response.data;
     return { props: { data } };
   } catch (error) {
+    console.log('errorr')
     return { props: { data: [] } };
   }
 };
