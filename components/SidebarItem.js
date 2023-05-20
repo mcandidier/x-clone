@@ -1,16 +1,20 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { destroyCookie } from 'nookies';
+import { resetUser } from '@/store/user-slice';
+import { useDispatch } from 'react-redux';
 
 
 function SidebarItem({label, href, icon: Icon, logout}) {
-  const router = useRouter()
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   const handleClick = () => {
     if(logout) {
-
       destroyCookie(null, 'token');
       destroyCookie(null, 'csrftoken');
-      router.push('/login')
+      dispatch(resetUser());
+      router.push('/login');
     } else {
       router.push(href)
     }

@@ -6,7 +6,9 @@ export const currentUserSlice = createSlice({
   initialState: null,
   reducers: {
     setCurrentUser: (state, action) => action.payload,
-    clearCurrentUser: (state) => null,
+    resetUser: (state) => {
+      return null;
+    },
   },
 });
 
@@ -18,5 +20,6 @@ export const fetchCurrentUser = () => (dispatch) => {
 }
 
 export const { 
-    setCurrentUser
+    setCurrentUser,
+    resetUser,
 } = currentUserSlice.actions;
