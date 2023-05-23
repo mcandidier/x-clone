@@ -13,12 +13,11 @@ function UserView() {
   const {userId} = router.query;
 
   const {data, isLoading, error} = fetchUser(userId);
+  console.log(data)
 
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
-
-  console.log(data, 'data')
   if (isLoading) {
     return (
       <div className='flex justify-center items-center h-full'>
@@ -30,7 +29,7 @@ function UserView() {
 
   return (
     <>
-      <Header label='User Profile'/>
+      <Header label={data?.bio}/>
       {data?.bio}
     </>
   );

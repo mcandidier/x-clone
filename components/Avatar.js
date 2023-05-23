@@ -8,8 +8,7 @@ function Avatar({userId, hasBorder, profile}) {
   const router = useRouter();
 
   const handleClick = () => {
-    console.log('handle Click')
-    const url = `/profile/${userId}`;
+    const url = `/users/${userId}`;
     router.push(url);
   }
 
@@ -22,15 +21,16 @@ function Avatar({userId, hasBorder, profile}) {
         transition
         cursor-pointer
         relative
+        w-9
+        h-9
       `}>
       <Image fill style={{
         objectFit: true,
         borderRadius: '100%',
       }}
-      src={profile?.image}
+      src={profile?.image || '/images/placeholder/user.png'}
       onClick={handleClick}
       />
-      test
       </div>
   )
 } 
