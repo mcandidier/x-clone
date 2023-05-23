@@ -6,6 +6,8 @@ import { useRouter } from 'next/router';
 import { ClipLoader } from 'react-spinners';
 
 import { fetchUser } from '@/hooks/fetchUser';
+import UserHero from '@/components/users/UserHero'
+import UserBio from '@/components/users/UserBio';
 
 
 function UserView() {
@@ -18,6 +20,8 @@ function UserView() {
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
+
+
   if (isLoading) {
     return (
       <div className='flex justify-center items-center h-full'>
@@ -26,11 +30,11 @@ function UserView() {
     )
   }
 
-
   return (
     <>
       <Header label={data?.bio}/>
-      {data?.bio}
+      <UserHero/>
+      <UserBio data={data}/>
     </>
   );
 }

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { BiBorderRadius } from 'react-icons/bi';
 
-function Avatar({userId, hasBorder, profile}) {
+function Avatar({userId, hasBorder, profile, isLarge}) {
 
   const router = useRouter();
 
@@ -21,8 +21,7 @@ function Avatar({userId, hasBorder, profile}) {
         transition
         cursor-pointer
         relative
-        w-9
-        h-9
+        ${isLarge? 'w-24 h-24': 'w-9 h-9'}
       `}>
       <Image fill style={{
         objectFit: true,
