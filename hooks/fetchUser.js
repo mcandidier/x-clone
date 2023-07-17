@@ -11,7 +11,6 @@ const fetchUser = (userId) => {
 
 const fetchCurrentUser = () => {
     const {data, error, isLoading} = useSWR(`/accounts/profile/`, fetcher)
-    console.log('fetchuser')
     return { data, error, isLoading}
 }
 

@@ -8,7 +8,7 @@ function Avatar({userId, hasBorder, profile, isLarge}) {
   const router = useRouter();
 
   const handleClick = () => {
-    const url = `/users/${userId}`;
+    const url = `/profile/${userId}`;
     router.push(url);
   }
 
@@ -29,6 +29,7 @@ function Avatar({userId, hasBorder, profile, isLarge}) {
       }}
       src={profile?.image || '/images/placeholder/user.png'}
       onClick={handleClick}
+      alt='avatar'
       />
       </div>
   )

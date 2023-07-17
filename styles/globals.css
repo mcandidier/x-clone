@@ -10,3 +10,8 @@ body {
   @apply h-full bg-black;
   @apply text-white;
 }
+
+
+.error {
+  color: #d32f2f;
+}

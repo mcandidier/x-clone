@@ -17,7 +17,7 @@ function FollowButton() {
                           <p className='text-white font-semibold text-sm'>
                             {user.name}
                           </p>
-                          <p className='text-xs'>@{user.name}</p>
+                          <p className='text-xs text-white'>@{user.name}</p>
                         </div>
                     </div>
                 })}

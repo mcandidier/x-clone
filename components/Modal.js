@@ -2,9 +2,7 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 function CommonDialog({open, setOpen, component:Component, title, size}) {
@@ -25,7 +23,7 @@ function CommonDialog({open, setOpen, component:Component, title, size}) {
         onClose={handleOnClose}
         className='bg-neutral-700 bg-opacity-70'> 
         <DialogTitle id={title} className='bg-black'>
-          {title}
+          <span className='text-white'>{title}</span>
         </DialogTitle>
         <DialogContent className='bg-black'>
           {Component}
