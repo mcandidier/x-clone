@@ -3,11 +3,23 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import CommonDialog from './Modal';
 import ChangeProfileImage from './users/ChangeProfileImage';
+import { fetchUser } from '@/hooks/fetchUser';
 
-function Avatar({userId, hasBorder, image, isLarge, editMode}) {
+
+const Avatar = (props) => {
+  const { userId, hasBorder, isLarge, editMode } = props;
+  console.log(userId);
+
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const {data} = fetchUser(userId);
 
+  // console.log(user);
+  // useEffect(() => {
+  //   if(userId && user) {
+  //     setUserImage(user.avatar)
+  //   }
+  // }, [userId, user])
 
   const handleClick = () => {
     const url = `/profile/${userId}`;
@@ -31,12 +43,12 @@ function Avatar({userId, hasBorder, image, isLarge, editMode}) {
       `}>
 
       {
-        image ? (
+        data?.avatar ? (
           <Image fill style={{
             objectFit: true,
             borderRadius: '100%',
           }}
-          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_HOST}${image}`}
+          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_HOST}${data.avatar}`}
           onClick={editMode? changeProfPic : handleClick}
           alt='avatar'
           />
@@ -65,3 +77,13 @@ function Avatar({userId, hasBorder, image, isLarge, editMode}) {
 } 
 
 export default Avatar;
+
+
+export async function getStaticProps(context) {
+  // const pid = context.params.pid
+
+  console.log(props, 'test')
+  return {
+    props: {}, // will be passed to the page component as props
+  }
+}

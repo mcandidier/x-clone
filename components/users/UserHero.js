@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 function UserHero({userId}) {
   const {data, error, isLoading}  = fetchUser(userId)
   const currentUser = useSelector(state => state.auth);
-  const [profileImage, setProfileImage] = useState(null);
+  // const [profileImage, setProfileImage] = useState(null);
   const [isLoggedInUser, setIsLoggedInUser] = useState(null);
 
 
@@ -17,11 +17,11 @@ function UserHero({userId}) {
     const loggedIn = parseInt(uid) === parseInt(userId)
     setIsLoggedInUser(loggedIn);
     
-    if(parseInt(currentUser?.user) === parseInt(userId)) {
-      setProfileImage(currentUser?.avatar);
-    } else {
-      setProfileImage(data?.avatar)
-    }
+    // if(parseInt(currentUser?.user) === parseInt(userId)) {
+    //   setProfileImage(currentUser?.avatar);
+    // } else {
+    //   setProfileImage(data?.avatar)
+    // }
 
   }, [userId, currentUser?.avatar])
 
@@ -29,7 +29,7 @@ function UserHero({userId}) {
     <>
     <div className='bg-neutral-700 h-44 relative'>
       <div className='absolute -bottom-12 left-4 '>
-        <Avatar userId={userId} isLarge image={profileImage} editMode={isLoggedInUser}/>   
+        <Avatar userId={userId} isLarge editMode={isLoggedInUser}/>   
       </div>
     </div>
     </> 

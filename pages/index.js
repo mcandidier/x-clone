@@ -5,7 +5,7 @@ import Header from '@/components/Header'
 import {withAuthAndPermission} from '../components/Auth';
 
 import Form from '@/components/Form';
-
+import PostFeed from '@/components/PostFeed';
 
 const Home = () => {
   return (
@@ -18,8 +18,8 @@ const Home = () => {
       </Head>
       <main>
         <Header label={'Home'}/>
-        <Form placeholder="what's happening?"></Form>
-
+        <Form placeholder="What's happening?"></Form>
+        <PostFeed></PostFeed>
       </main>
     </>
   )

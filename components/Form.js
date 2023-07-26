@@ -44,7 +44,7 @@ function Form({
 
 
   return (
-    <div className='border-b-[1px] border-neutral-800 px-5 py-2'>
+    <div className='border-neutral-800 px-5 py-2'>
         <div className='w-full'>
             <textarea
             className='
@@ -55,7 +55,7 @@ function Form({
             bg-black
             w-full
             outline-none
-            text-[20px]
+            text-[18px]
             placeholder-neutral-500
             text-white
             '
@@ -68,7 +68,7 @@ function Form({
             peer-focus:opacity-100
             h-[1px]
             w- full
-            border-neutral-8000
+            border-neutral-800
             transition
             '/>
             <div className='mt-4 flex flex-row justify-end'>
