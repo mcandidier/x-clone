@@ -22,7 +22,7 @@ export default function App({
   const state = store.getState();
 
   if(token && !state.auth) {
-    API.get('accounts/profile/').then(res => {
+    API.get('profiles/').then(res => {
       store.dispatch(setCurrentUser(res.data))
     });
   }

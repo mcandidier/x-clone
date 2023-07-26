@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { BiBorderRadius } from 'react-icons/bi';
+import CommonDialog from './Modal';
+import ChangeProfileImage from './users/ChangeProfileImage';
 
-function Avatar({userId, hasBorder, profile, isLarge}) {
-
+function Avatar({userId, hasBorder, image, isLarge, editMode}) {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+
 
   const handleClick = () => {
     const url = `/profile/${userId}`;
     router.push(url);
+  }
+
+  const changeProfPic = () => {
+    setOpen(true);
   }
 
   return (
@@ -23,15 +29,38 @@ function Avatar({userId, hasBorder, profile, isLarge}) {
         relative
         ${isLarge? 'w-24 h-24': 'w-9 h-9'}
       `}>
-      <Image fill style={{
-        objectFit: true,
-        borderRadius: '100%',
-      }}
-      src={profile?.image || '/images/placeholder/user.png'}
-      onClick={handleClick}
-      alt='avatar'
-      />
-      </div>
+
+      {
+        image ? (
+          <Image fill style={{
+            objectFit: true,
+            borderRadius: '100%',
+          }}
+          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_HOST}${image}`}
+          onClick={editMode? changeProfPic : handleClick}
+          alt='avatar'
+          />
+        )
+        :
+        <Image fill style={{
+          objectFit: true,
+          borderRadius: '100%',
+        }}
+        src={'/images/placeholder/user.png'}
+        onClick={editMode? changeProfPic : handleClick}
+        alt='avatar'
+        />
+      }
+      
+      <CommonDialog
+        setOpen={setOpen} 
+        open={open}
+        title='Upload Image'
+        size='xs'
+        component={<ChangeProfileImage setOpen={setOpen}/>}
+      >
+      </CommonDialog>
+    </div>
   )
 } 
 

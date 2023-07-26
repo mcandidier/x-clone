@@ -4,6 +4,9 @@ import { Inter } from 'next/font/google'
 import Header from '@/components/Header'
 import {withAuthAndPermission} from '../components/Auth';
 
+import Form from '@/components/Form';
+
+
 const Home = () => {
   return (
     <>
@@ -15,6 +18,8 @@ const Home = () => {
       </Head>
       <main>
         <Header label={'Home'}/>
+        <Form placeholder="what's happening?"></Form>
+
       </main>
     </>
   )

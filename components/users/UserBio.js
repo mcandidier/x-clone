@@ -8,16 +8,21 @@ import ModalUpdate from './ModalUpdate';
 
 import { useSelector } from 'react-redux';
 import { LoaderIcon } from 'react-hot-toast';
+import { current } from '@reduxjs/toolkit';
 
 
 function UserBio({user}) {
+
   const currentUser = useSelector(state => state.auth);
   const [open, setOpen] = useState(false)
+
+  const userId = currentUser?.id ? currentUser?.id : currentUser?.user;
+  
   const handleEdit = () => {
     setOpen(true)
   }
 
-  if(!user & !currentUser) {
+  if(!user && !currentUser) {
     return (
       <LoaderIcon/>
     )
@@ -26,16 +31,19 @@ function UserBio({user}) {
   return (
     <div className='border-b-[1px] border-neutral-800 pb-4 text-sm'>
       <div className='flex justify-end p-2'>
-        { currentUser?.id === user?.user ? (
-          <button 
-            onClick={handleEdit}
-            className='cursor-pointer rounded-full bg-white text-black font-semibold text-sm py-2 px-2'>
-              Edit
-            </button>
-          ): (
-          <button className='cursor-pointer rounded-full bg-white text-black font-semibold text-sm py-2 px-2'>Follow</button>
-        )
-         }
+          <>
+           { userId  === user.user ? (
+            <button 
+              onClick={handleEdit}
+              className='cursor-pointer rounded-full bg-white text-black font-semibold text-sm py-2 px-2'>
+                Edit
+              </button>
+            ): (
+            <button className='cursor-pointer rounded-full bg-white text-black font-semibold text-sm py-2 px-2'>Follow</button>
+            )
+          }
+          </>
+
       </div>
 
       <div className='mt-6 px-4'>

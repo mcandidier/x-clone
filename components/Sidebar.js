@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 
 function Sidebar() {
   const user = useSelector((state) => state.auth);
+  const userId = user?.id? user.id :user?.user;
 
   const items = [
     {
@@ -24,7 +25,7 @@ function Sidebar() {
     },
     {
       label: 'Profile',
-      href: `/profile/${user?.id}`,
+      href: `/profile/${userId}`,
       icon: <FaUser className='text-white'/>
     }
   ]

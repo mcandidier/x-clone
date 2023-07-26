@@ -9,7 +9,9 @@ import { ClipLoader } from 'react-spinners';
 import { fetchUser } from '@/hooks/fetchUser';
 import UserHero from '@/components/users/UserHero'
 import UserBio from '@/components/users/UserBio';
+import { useSelector } from 'react-redux';
 import API from '@/libs/api';
+
 
 function UserView({User}) {
   const router = useRouter();
@@ -25,7 +27,7 @@ function UserView({User}) {
 
   return (
     <>
-      <Header label={User?.bio}/>
+      <Header label={User?.bio}/> 
       <UserHero userId={userId}/>
       <UserBio user={User}/>
     </>
@@ -57,6 +59,7 @@ export async function getStaticProps(ctx) {
       revalidate: 60
     }
   } catch (error) {
+    console.log(error, 'error')
     return {
       notFound: true
     }

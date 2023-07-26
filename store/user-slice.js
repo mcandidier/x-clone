@@ -9,6 +9,9 @@ export const currentUserSlice = createSlice({
     resetUser: (state) => {
       return null;
     },
+    setProfileImage(state, action) {
+      state.avatar =  action.payload;
+    }
   },
 });
 
@@ -22,4 +25,5 @@ export const fetchCurrentUser = () => (dispatch) => {
 export const { 
     setCurrentUser,
     resetUser,
+    setProfileImage,
 } = currentUserSlice.actions;

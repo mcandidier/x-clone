@@ -1,0 +1,1 @@
+export const BACKEND_IMAGE_HOST = 'http://localhost:8000'
