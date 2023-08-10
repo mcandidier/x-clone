@@ -11,12 +11,10 @@ import UserHero from '@/components/users/UserHero'
 import UserBio from '@/components/users/UserBio';
 import { useSelector } from 'react-redux';
 import API from '@/libs/api';
+import PostFeed from '@/components/PostFeed';
 
 
-function UserView({User}) {
-  const router = useRouter();
-  const {userId} = router.query; 
-
+function UserView({User, userId}) {
   if (!User) {
     return (
       <div className='flex justify-center items-center h-full'>
@@ -30,6 +28,7 @@ function UserView({User}) {
       <Header label={User?.bio}/> 
       <UserHero userId={userId}/>
       <UserBio user={User}/>
+      <PostFeed userId={userId}></PostFeed>
     </>
   );
 }
@@ -55,6 +54,7 @@ export async function getStaticProps(ctx) {
     return {
       props: {
           User: fetchUser.data,
+          userId: userId
       },
       revalidate: 60
     }
