@@ -8,18 +8,9 @@ import { fetchUser } from '@/hooks/fetchUser';
 
 const Avatar = (props) => {
   const { userId, hasBorder, isLarge, editMode } = props;
-  console.log(userId);
-
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const {data} = fetchUser(userId);
-
-  // console.log(user);
-  // useEffect(() => {
-  //   if(userId && user) {
-  //     setUserImage(user.avatar)
-  //   }
-  // }, [userId, user])
 
   const handleClick = () => {
     const url = `/profile/${userId}`;
@@ -79,11 +70,3 @@ const Avatar = (props) => {
 export default Avatar;
 
 
-export async function getStaticProps(context) {
-  // const pid = context.params.pid
-
-  console.log(props, 'test')
-  return {
-    props: {}, // will be passed to the page component as props
-  }
-}

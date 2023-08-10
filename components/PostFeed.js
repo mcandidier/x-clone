@@ -9,7 +9,7 @@ function PostFeed({userId}) {
     <>
       {
         posts?.map(post => 
-          <PostItem data={post}></PostItem>
+          <PostItem key={post.id} data={post}></PostItem>
         )
       }
     </>

@@ -14,7 +14,7 @@ function Form({
 }) {
     const user = useSelector(state => state.auth);
     const [loading, setLoading] = useState(false);
-    const [body, setBody] = useState(null);
+    const [body, setBody] = useState('');
 
     const { mutate: mutatePosts} = usePosts()    
 
@@ -39,12 +39,11 @@ function Form({
             setBody('');
         }
 
-
     }, [body, mutatePosts]);
 
 
   return (
-    <div className='border-neutral-800 px-5 py-2'>
+    <div className='border-neutral-800 border-b-[1px] px-5 py-3'>
         <div className='w-full'>
             <textarea
             className='
