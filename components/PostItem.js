@@ -12,29 +12,48 @@ import { useSelector } from 'react-redux';
 import API from '@/libs/api';
 import { fetchCurrentUser } from '@/hooks/fetchUser';
 
-function PostItem({data}) {
+function PostItem(props) {
+  const item = props.data;
   const router = useRouter();
   const [isLiked, setIsLiked] = useState(null);
-  const [comment, setComment] = useState(data);
+  const [data, setData] = useState(item);
   const auth = useSelector(state => state.auth);
-  const userId = auth.user? auth.user : auth.id;
+  const userId = auth?.user? auth.user : auth.id;
 
-  const addItem = (newElement) => {
-    const newItems = [...comment.likes, newElement];
-    setComment({ ...comment, likes: newItems });
+  // const addItem = (newElement) => {
+  //   const newItems = [...data.likes, newElement];
+  //   setLikes({...data, likes: newItems });
+  //   console.log(newItems, 'items')
+  // };
+
+  // const removeItem = (item) => {
+  //   const newArray = _.without(data.likes, item);
+  //   setLikes({...likes, likes: newArray}); // Use spread operator to create a new array with the added item
+  // };
+
+  const removeLike = (valueToRemove) => {
+    const updatedLikes = data.likes.filter(like => like !== valueToRemove);
+    setData(prevItem => ({
+      ...prevItem,
+      likes: updatedLikes
+    }));
   };
 
-  const removeItem = (item) => {
-    const newArray = _.without(comment.likes, item);
-    setComment({...comment, likes: newArray}); // Use spread operator to create a new array with the added item
+  const insertLike = (valueToInsert) => {
+    const updatedLikes = data.likes.concat(valueToInsert);
+    setData(prevItem => ({
+      ...prevItem,
+      likes: updatedLikes
+    }));
   };
+
 
   useEffect(() => {
-    const isLike = _.includes(comment.likes, userId);
+    const isLike = _.includes(data.likes, userId);
     setIsLiked(isLike);
-  },[isLiked, comment ])
+  },[data])
 
-  const date_posted = new Date(data.created_at);
+  const date_posted = new Date(data?.created_at);
   const createAt = formatDistanceToNowStrict(date_posted, {
     addSuffix: false
   });
@@ -42,19 +61,20 @@ function PostItem({data}) {
 
   const handleLike = async (e) => {
     e.stopPropagation();
-    addItem(userId);
-    const res = await API.post(`tweets/${data.id}/likes/`);
+    const res = await API.post(`tweets/${data?.id}/likes/`);
+    // addItem(userId);
+    insertLike(userId)
+    console.log('handle like')
   }
 
   const handeUnlike = async (e) => {
     e.stopPropagation();
     const res = await API.delete(`tweets/${data.id}/unlike/`);
-    removeItem(userId);
+    removeLike(userId)
   }
 
   const gotoPost = (e) => {
-    // e.stopPropagation()
-    router.push(`posts/${data.id}`)
+    router.push(`/posts/${data.id}`)
   }
   return (
     <div
@@ -72,7 +92,7 @@ function PostItem({data}) {
         flex-row
         items-start
         gap-4'>
-          <Avatar userId={comment.user} hasBorder={false}/>
+          <Avatar userId={data.user} hasBorder={false}/>
           <div>
             <div className='flex flex-row items-center gap-2 '>
               <p className='
@@ -81,7 +101,7 @@ function PostItem({data}) {
               cursor-pointer
               text-sm'
               >
-                {comment.username}
+                {data.username}
               </p>
               <span className='
               text-neutral-500
@@ -89,7 +109,7 @@ function PostItem({data}) {
               hover:underline
               text-sm
               '>
-              @{comment.username}
+              @{data.username}
               </span>
 
               <span className='text-neutral-500 text-sm'>
@@ -97,7 +117,7 @@ function PostItem({data}) {
               </span>
             </div>
             <div className='flex flex-row text-white mt-1 '>
-              {comment.content}
+              {data.content}
             </div>
             <div className='flex flex-row items-center mt-3 gap-10'>
               <div className='flex flex-row items-center gap-2 cursor-pointer text-neutral-500'>
@@ -107,7 +127,7 @@ function PostItem({data}) {
               <div className='flex flex-row items-center gap-2 cursor-pointer text-neutral-500'>
                 <BiLike size={20} onClick={isLiked ? handeUnlike : handleLike}/>
                 {data.likes.length !== 0 && (
-                <p>{comment.likes.length}</p>
+                <p>{data.likes.length}</p>
                 )}
               </div>
             </div>
