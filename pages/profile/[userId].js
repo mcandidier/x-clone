@@ -59,7 +59,6 @@ export async function getStaticProps(ctx) {
       revalidate: 60
     }
   } catch (error) {
-    console.log(error, 'error')
     return {
       notFound: true
     }

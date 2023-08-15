@@ -12,7 +12,8 @@ const Avatar = (props) => {
   const [open, setOpen] = useState(false);
   const {data} = fetchUser(userId);
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.stopPropagation();
     const url = `/profile/${userId}`;
     router.push(url);
   }

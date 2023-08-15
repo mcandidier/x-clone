@@ -10,14 +10,19 @@ import { useSelector } from 'react-redux';
 import { LoaderIcon } from 'react-hot-toast';
 import { current } from '@reduxjs/toolkit';
 
+import useFollow from '@/hooks/useFollow';
+
+
 
 function UserBio({user}) {
-
   const currentUser = useSelector(state => state.auth);
   const [open, setOpen] = useState(false)
 
   const userId = currentUser?.id ? currentUser?.id : currentUser?.user;
+  const [isFollowed, setIsFollowed] = useState(null);
   
+  const {isFollowing, toggleFollow}  = useFollow(user.user);
+
   const handleEdit = () => {
     setOpen(true)
   }
@@ -26,6 +31,14 @@ function UserBio({user}) {
     return (
       <LoaderIcon/>
     )
+  }
+
+  const handleUnfollow = () => {
+    console.log('unfollow')
+  }
+
+  const handleFollow = () => {
+    console.log('follow')
   }
 
   return (
@@ -39,7 +52,15 @@ function UserBio({user}) {
                 Edit
               </button>
             ): (
-            <button className='cursor-pointer rounded-full bg-white text-black font-semibold text-sm py-2 px-2'>Follow</button>
+            <button className='
+              cursor-pointer
+              rounded-full 
+              bg-white
+              text-black
+              font-semibold
+              text-sm py-2 px-2'
+              onClick={isFollowing ? handleUnfollow : handleFollow}
+             >{isFollowing? 'Unfollow': 'Follow'}</button>
             )
           }
           </>
@@ -66,13 +87,13 @@ function UserBio({user}) {
         <div className='flex flex-row items-center mt-4 gap-6'>
           <div className='flex flex-row gap-2'>
               <p className='text-white'>
-                {user.following}
+                {user.following?.length}
               </p>
               <p className='text-neutral-500'>Following</p>
           </div>
           <div className='flex flex-row gap-2 '>
               <p className='text-white'>
-                {user.followers}
+                {user.followers?.length}
               </p>
               <p className='text-neutral-500'>Followers</p>
           </div>

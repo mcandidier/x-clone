@@ -10,7 +10,7 @@ const fetchUser = (userId) => {
 }
 
 const fetchCurrentUser = () => {
-    const {data, error, isLoading} = useSWR(`/accounts/profile/`, fetcher)
+    const {data, error, isLoading} = useSWR(`/profiles/`, fetcher)
     return { data, error, isLoading}
 }
 

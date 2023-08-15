@@ -8,7 +8,6 @@ import _ from 'lodash';
 import { useSelector } from 'react-redux';
 
 
-
 import API from '@/libs/api';
 import { fetchCurrentUser } from '@/hooks/fetchUser';
 
@@ -18,18 +17,7 @@ function PostItem(props) {
   const [isLiked, setIsLiked] = useState(null);
   const [data, setData] = useState(item);
   const auth = useSelector(state => state.auth);
-  const userId = auth?.user? auth.user : auth.id;
-
-  // const addItem = (newElement) => {
-  //   const newItems = [...data.likes, newElement];
-  //   setLikes({...data, likes: newItems });
-  //   console.log(newItems, 'items')
-  // };
-
-  // const removeItem = (item) => {
-  //   const newArray = _.without(data.likes, item);
-  //   setLikes({...likes, likes: newArray}); // Use spread operator to create a new array with the added item
-  // };
+  const userId = auth?.user? auth?.user : auth?.id;
 
   const removeLike = (valueToRemove) => {
     const updatedLikes = data.likes.filter(like => like !== valueToRemove);
