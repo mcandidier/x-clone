@@ -2,9 +2,6 @@ import axios from 'axios';
 import { parseCookies } from 'nookies';
 
 
-
-console.log('PUBLIC_API_URL', process.env.NEXT_PUBLIC_API_URL)
-
 const API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
 });

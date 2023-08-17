@@ -8,8 +8,6 @@ import { Toaster } from 'react-hot-toast';
 import { parseCookies } from 'nookies';
 import API from '@/libs/api';
 import { setCurrentUser } from '@/store/user-slice';
-import { useDispatch } from 'react-redux';
-
 
 export default function App({ 
     Component, 
@@ -27,13 +25,12 @@ export default function App({
     });
   }
 
-
   return (
       <Provider store={store}>
         <Toaster/>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
       </Provider>
   ) 
 }

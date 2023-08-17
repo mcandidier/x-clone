@@ -33,14 +33,6 @@ function UserBio({user}) {
     )
   }
 
-  const handleUnfollow = () => {
-    console.log('unfollow')
-  }
-
-  const handleFollow = () => {
-    console.log('follow')
-  }
-
   return (
     <div className='border-b-[1px] border-neutral-800 pb-4 text-sm'>
       <div className='flex justify-end p-2'>
@@ -59,7 +51,7 @@ function UserBio({user}) {
               text-black
               font-semibold
               text-sm py-2 px-2'
-              onClick={isFollowing ? handleUnfollow : handleFollow}
+              onClick={toggleFollow}
              >{isFollowing? 'Unfollow': 'Follow'}</button>
             )
           }

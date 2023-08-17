@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+
 import { BshouseFill, BsBellFill, BsHouse, BsHouseFill} from 'react-icons/bs';
 import { FaUser} from 'react-icons/fa';
 import { BiLogOut} from 'react-icons/bi';
@@ -7,10 +8,10 @@ import SidebarItem from './SidebarItem';
 
 import { useSelector } from 'react-redux';
 
-
 function Sidebar() {
   const user = useSelector((state) => state.auth);
   const userId = user?.id? user.id :user?.user;
+
 
   const items = [
     {
@@ -21,7 +22,7 @@ function Sidebar() {
     {
       label: 'Notifications',
       href: '/notifications',
-      icon: <BsBellFill className='text-white'/>
+      icon: <BsBellFill className='text-white relative'></BsBellFill>
     },
     {
       label: 'Profile',
