@@ -7,7 +7,15 @@ import store from '../store';
 import { Toaster } from 'react-hot-toast';
 import { parseCookies } from 'nookies';
 import API from '@/libs/api';
-import { setCurrentUser } from '@/store/user-slice';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import ReconnectingWebSocket from 'reconnecting-websocket';
+
+
+import { setCurrentUser } from '@/store/user-slice'; 
+import { updateNotification } from '@/store/notification-slice';
+
+
 
 export default function App({ 
     Component, 
@@ -16,8 +24,32 @@ export default function App({
 
   const cookies = parseCookies();
   const token = cookies.token;
+  const state = store.getState()
 
-  const state = store.getState();
+  const notification =  state.notification;
+  const [socket, setSocket] = useState(null)
+
+  useEffect(() => {
+    if(!socket) {
+      const ws = new ReconnectingWebSocket(`ws://localhost:8000/ws/notifications/?token=${token}`);
+      ws.addEventListener('open', () => {
+        console.log('WebSocket connection opened');
+      });
+
+      ws.addEventListener('message', (event) => {
+        const data = JSON.parse(event.data);
+        const dispatch = store.dispatch;
+        dispatch(updateNotification(data));
+      });
+    }
+
+    return () => {
+      if(socket) {
+        socket.disconnect();
+        setSocket(null);
+      }
+    };
+  }, [])
 
   if(token && !state.auth) {
     API.get('profiles/').then(res => {
