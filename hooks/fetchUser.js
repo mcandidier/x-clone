@@ -6,7 +6,7 @@ const fetcher = url => API.get(url).then(res => res.data)
 
 const fetchUser = (userId) => {
     const {data, error, isLoading, mutate} = useSWR(`/users/${userId}/`, fetcher)
-    return { data, error, isLoading,mutate}
+    return { data, error, isLoading, mutate}
 }
 
 const fetchCurrentUser = () => {
@@ -18,4 +18,4 @@ export {
     fetcher,
     fetchUser,
     fetchCurrentUser
-};
+}

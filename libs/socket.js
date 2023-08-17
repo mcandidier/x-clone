@@ -7,7 +7,6 @@ function useWebsocket(url) {
     const [socket, setSocket] = useState(null);
     const cookies = parseCookies();
     const token = cookies.token;
-    console.log(token, 'token')
 
     useEffect(() => {
         const newSocket = new ReconnectingWebSocket(url, {

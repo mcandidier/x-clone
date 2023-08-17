@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 
 import {  toast } from 'react-hot-toast';
 import API from '@/libs/api';
-import usePosts from '@/hooks/usePosts';
+import {usePosts} from '@/hooks/usePosts';
 import { set } from 'date-fns';
 
 function Form({

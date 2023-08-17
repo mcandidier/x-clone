@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import { parseCookies } from 'nookies';
 
+import Header from '@/components/Header';
 
 function notifications() {
   const [messages, setMessages] = useState([]);
@@ -32,12 +33,11 @@ function notifications() {
 
   return (
     <>
-        <div>notifications</div>
-        { messages?.map( (message, key) => {
-          return <p key={key}>{message}</p>
-        })}
+      <Header label={'Notifications'}/>
+      { messages?.map( (message, key) => {
+        return <p key={key}>{message}</p>
+      })}
     </>
-
   )
 }
 

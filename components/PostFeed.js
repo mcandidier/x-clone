@@ -1,4 +1,4 @@
-import usePosts from '@/hooks/usePosts'
+import {usePosts} from '@/hooks/usePosts'
 import React from 'react'
 import PostItem from './PostItem'
 
@@ -9,7 +9,7 @@ function PostFeed({userId}) {
     <>
       {
         posts?.map(post => 
-          <PostItem key={post.id} data={post}></PostItem>
+          <PostItem key={post.id} postId={post.id}></PostItem>
         )
       }
     </>

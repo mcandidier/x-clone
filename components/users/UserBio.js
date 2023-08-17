@@ -23,6 +23,7 @@ function UserBio({user}) {
   
   const {isFollowing, toggleFollow}  = useFollow(user.user);
 
+  
   const handleEdit = () => {
     setOpen(true)
   }
