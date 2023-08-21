@@ -1,41 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import ReconnectingWebSocket from 'reconnecting-websocket';
-import { parseCookies } from 'nookies';
-
 import Header from '@/components/Header';
+import Notification from '@/components/Notification';
+
+
+import { useSelector } from 'react-redux';
 
 function notifications() {
-  const [messages, setMessages] = useState([]);
-  const cookies = parseCookies();
-  const token = cookies.token;
 
-//   useEffect(() => {
+  const messages = useSelector((state) => state.notification);
+  console.log(messages);
 
-//   const socket = new ReconnectingWebSocket(`ws://localhost:8000/ws/notifications/?token=${token}`);
+  const messageArray = messages.map((message) => {
 
-//   // socket.addEventListener('open', () => {
-//   //   console.log('WebSocket connection opened');
-//   // });
+    const jsonArray = JSON.parse(message);
+    return jsonArray;
+  })
 
-//   // socket.addEventListener('message', (event) => {
-//   //   const data = JSON.parse(event.data);
-//   //   console.log(data, 'data')
-//   //   setMessages(messages => [...messages, data])
-
-//   //   console.log(messages)
-//   // });
-
-//   return () => {
-//     socket.close();
-//   };
-
-// }, [messages]);
 
   return (
     <>
       <Header label={'Notifications'}/>
-      { messages?.map( (message, key) => {
-        return <p key={key}>{message}</p>
+      { messageArray.map( (message, key) => {
+        return <Notification key={key} data={message}></Notification>
       })}
     </>
   )
