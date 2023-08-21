@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react'
+import React, { useEffect, useState, useMemo} from 'react'
 import { useRouter } from 'next/router'
 import Avatar from './Avatar';
 
@@ -10,39 +10,36 @@ import API from '@/libs/api';
 import { fetchCurrentUser } from '@/hooks/fetchUser';
 
 import { usePost, useLike } from '@/hooks/usePosts';
+import { useComments } from '@/hooks/useComments';
+
 
 function PostItem({postId}) {
   const {data, mutate: mutatedPost} = usePost(postId)
   const router = useRouter();
-  // const [data, setData] = useState(item);
   const auth = useSelector(state => state.auth);
   const userId = auth?.user? auth?.user : auth?.id;
+  const {data:comments} = useComments(postId);
+
 
   const { isLiked, toggleLike} = useLike(postId, userId);
 
-  const removeLike = (valueToRemove) => {
-    const updatedLikes = data.likes.filter(like => like !== valueToRemove);
-    setData(prevItem => ({
-      ...prevItem,
-      likes: updatedLikes
-    }));
-  };
-
-  const insertLike = (valueToInsert) => {
-    const updatedLikes = data.likes.concat(valueToInsert);
-    setData(prevItem => ({
-      ...prevItem,
-      likes: updatedLikes
-    }));
-  };
-
-  const dateCreated = () => {
-    const date_posted = new Date(data?.created_at);
-    const createAt = formatDistanceToNowStrict(date_posted, {
+  const dateCreated = useMemo(() => {
+    if(!data?.created_at) {
+      return null;
+    }
+    return formatDistanceToNowStrict(new Date(data?.created_at), {
       addSuffix: false
     });
-    return createAt
-  }
+  }, [data?.created_at]);
+
+  const commentCount = useMemo(() => {
+    if(!comments?.length) {
+      return 0;
+    }
+    return comments.length
+  }, [comments?.length]);
+
+  
 
   const gotoPost = (e) => {
     router.push(`/posts/${data.id}`)
@@ -50,6 +47,7 @@ function PostItem({postId}) {
   return (
     <>
     { data && (
+      <>
       <div
       onClick={gotoPost}
       className='
@@ -86,7 +84,7 @@ function PostItem({postId}) {
               </span>
 
               <span className='text-neutral-500 text-sm'>
-                {dateCreated()}
+                {dateCreated}
               </span>
             </div>
             <div className='flex flex-row text-white mt-1 '>
@@ -95,7 +93,7 @@ function PostItem({postId}) {
             <div className='flex flex-row items-center mt-3 gap-10'>
               <div className='flex flex-row items-center gap-2 cursor-pointer text-neutral-500'>
                 <BiComment size={20}/>
-                <p>{1}</p>
+                <p>{commentCount}</p>
               </div>
               <div className='flex flex-row items-center gap-2 cursor-pointer text-neutral-500'>
                 <BiLike size={20} onClick={toggleLike} className={isLiked && 'text-cyan-400' }/>
@@ -107,8 +105,8 @@ function PostItem({postId}) {
           </div>
         </div>
     </div>
+    </>
     )
-
     }
     </>
   )
