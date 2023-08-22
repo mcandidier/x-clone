@@ -20,7 +20,6 @@ function PostItem({postId}) {
   const userId = auth?.user? auth?.user : auth?.id;
   const {data:comments} = useComments(postId);
 
-
   const { isLiked, toggleLike} = useLike(postId, userId);
 
   const dateCreated = useMemo(() => {
@@ -39,7 +38,6 @@ function PostItem({postId}) {
     return comments.length
   }, [comments?.length]);
 
-  
 
   const gotoPost = (e) => {
     router.push(`/posts/${data.id}`)

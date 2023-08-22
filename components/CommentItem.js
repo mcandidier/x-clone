@@ -8,8 +8,6 @@ function CommentItem({data}) {
     return formatDistanceToNowStrict(new Date(data.created_at))
   }, [data?.created_at]);
 
-
-
   return (
     <div
       className='
@@ -29,7 +27,7 @@ function CommentItem({data}) {
                 font-semibold
                 cursor-pointer
                 hover:underline
-              '>{data.content}
+              '>{data.username}
               </p>
               <span
                 className='text-neutral-500

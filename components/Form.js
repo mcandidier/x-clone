@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react';
+import React, { use, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useCallback } from 'react';
 
@@ -7,16 +7,21 @@ import API from '@/libs/api';
 import {usePosts} from '@/hooks/usePosts';
 import { set } from 'date-fns';
 
+import { usePost } from '@/hooks/usePosts';
+import { useComments } from '@/hooks/useComments';
+
 function Form({
     placeholder, 
     isComment,
     postId
 }) {
+    
     const user = useSelector(state => state.auth);
     const [loading, setLoading] = useState(false);
     const [body, setBody] = useState('');
 
-    const { mutate: mutatePosts} = usePosts()    
+    const { mutate: mutatePosts} = usePosts();
+    const { mutate: mutateComments}  = useComments(postId);
 
     const handleOnChange = (e) => {
         setBody(e.target.value)
@@ -25,21 +30,26 @@ function Form({
     const onSubmit = useCallback( async () => {
         setLoading(true);
         try {
-            const res = await API.post('tweets/', {'content': body});
-            console.log(res, 'data');
-            setBody('')
-            toast.success('Tweet created.')
+            if(!isComment && !postId) {
+                const res = await API.post('tweets/', {'content': body});
+                toast.success('Tweet created.')
+            } else {
+                const res = await API.post(`/comments/`, {'content': body, 'tweet': postId});
+                toast.success('Comment created.')
+            }
             mutatePosts(); 
+            mutateComments();
+            setBody('')
         } catch (error) {
             setLoading(false)
             setBody('')
-            toast.error('Somethin g went wrong.');
+            toast.error('Something went wrong.');
         } finally {
             setLoading(false);
             setBody('');
         }
 
-    }, [body, mutatePosts]);
+    }, [body, mutatePosts, usePost, mutateComments]);
 
 
   return (
@@ -78,7 +88,7 @@ function Form({
                 label='Tweet' 
                 disabled= {loading || !body}
                 onClick={onSubmit}>
-                    Tweet
+                    {isComment? 'Reply': 'Tweet'}
                 </button>
             </div>
         </div>

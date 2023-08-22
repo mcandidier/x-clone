@@ -15,6 +15,15 @@ const usePosts = (userId) => {
 }
 
 const usePost = (postId) => {
+    if (!postId) {
+        return {
+            data: null,
+            mutate: () => {}, // Placeholder function
+            isLoading: false,
+            error: null,
+        };
+    }
+
     const url = `/tweets/${postId}/`;
     const {data, error, isLoading, mutate} = useSWR(url, fetcher)
     return { data, error, isLoading, mutate}
