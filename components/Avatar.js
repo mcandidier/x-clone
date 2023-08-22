@@ -10,7 +10,9 @@ const Avatar = (props) => {
   const { userId, hasBorder, isLarge, editMode } = props;
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const {data} = fetchUser(userId);
+  const {data, mutate: mutateUser} = fetchUser(userId);
+
+  console.log('mutateUser', mutateUser);
 
   const handleClick = (e) => {
     e.stopPropagation();
@@ -61,7 +63,7 @@ const Avatar = (props) => {
         open={open}
         title='Upload Image'
         size='xs'
-        component={<ChangeProfileImage setOpen={setOpen}/>}
+        component={<ChangeProfileImage setOpen={setOpen} mutate={mutateUser}/>}
       >
       </CommonDialog>
     </div>

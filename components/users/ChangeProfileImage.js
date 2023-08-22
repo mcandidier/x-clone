@@ -7,7 +7,7 @@ import { setProfileImage } from '@/store/user-slice';
 import { toast } from 'react-hot-toast';
 
 
-function ChangeProfileImage({setOpen}) {
+function ChangeProfileImage({setOpen, mutate}) {
   const [image, setImage] = useState(null);
   const [file, setFile] = useState(null);
   const config = {
@@ -39,15 +39,13 @@ function ChangeProfileImage({setOpen}) {
     const formData = new FormData();
     formData.append('avatar', file);
 
-
     // Making API post request to upload user image
     API.put('/profile/image/', {'avatar': file}, config)
     .then((response) => {
       // Handle the API response as needed
-      const { avatar} = response.data;
-      dispatch(setProfileImage(avatar));
       setOpen(false);
       toast.success('Profile image has changed successfully.');
+      mutate();
     })
     .catch((error) => {
       // Handle any errors that occurred during the API request
