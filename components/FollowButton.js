@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import Avatar from './Avatar';
 import API from '@/libs/api';
-
+import { useSelector } from 'react-redux';
 
 function FollowButton() {
 
   const [users, setUsers] = useState([]);
+  const currentUser = useSelector((state) => state.auth)
+  console.log(currentUser)
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await API.get('suggested/');
-        const usersData = response.data;
-        setUsers(usersData);
+            const response = await API.get('suggested/');
+            const usersData = response.data;
+            setUsers(usersData);
       } catch (error) {
         // Handle error, e.g., display an error message
         console.error('Error fetching data:', error);
@@ -20,7 +22,7 @@ function FollowButton() {
     }
 
     fetchData();
-  },[])
+  },[currentUser])
 
   return (
     <div className='px-6 py-4'>
