@@ -7,7 +7,6 @@ function FollowButton() {
 
   const [users, setUsers] = useState([]);
   const currentUser = useSelector((state) => state.auth)
-  console.log(currentUser)
 
   useEffect(() => {
     async function fetchData() {
@@ -21,7 +20,9 @@ function FollowButton() {
       }
     }
 
-    fetchData();
+    if(currentUser) {
+      fetchData();
+    }
   },[currentUser])
 
   return (
