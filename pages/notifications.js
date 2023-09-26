@@ -12,7 +12,6 @@ function notifications() {
   const [notifications, setNotifications] = useState([]);
 
 
-
   useEffect(() => {
     async function fetchNotifications() {
       try {

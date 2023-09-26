@@ -12,8 +12,6 @@ const Avatar = (props) => {
   const [open, setOpen] = useState(false);
   const {data, mutate: mutateUser} = fetchUser(userId);
 
-  console.log('mutateUser', mutateUser);
-
   const handleClick = (e) => {
     e.stopPropagation();
     const url = `/profile/${userId}`;

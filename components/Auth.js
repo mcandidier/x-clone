@@ -10,10 +10,13 @@ export const withAuthAndPermission = (PageComponent, permissions) => {
     useEffect(() => {
       const cookies = parseCookies();
       const token = cookies.token;
+
+      console.log(token == undefined);
+      console.log(typeof(token))
       const isAuthenticated = token;
 
       // Redirect to login page if user is not authenticated
-      if (!isAuthenticated) {
+      if (!isAuthenticated || token === 'undefined') {
         router.push('/login');
         return;
       }

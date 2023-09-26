@@ -9,7 +9,7 @@ function Layout({children}) {
             <div className='grid grid-cols-4 h-full'>
                 <Sidebar/>
                 <div className='col-span-2 border-x border-cyan-800'>
-                    {children}
+                  {children}
                 </div>
                 <FollowButton/>
             </div>
