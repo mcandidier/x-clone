@@ -24,7 +24,7 @@ function LoginModal({setOpen, setOpenRegister}) {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:8000/api/accounts/login/",
+        `${process.env.NEXT_PUBLIC_API_URL}/accounts/login/`,
         {
           username: e.target.username.value,
           password: e.target.password.value,

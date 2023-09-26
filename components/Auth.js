@@ -11,8 +11,6 @@ export const withAuthAndPermission = (PageComponent, permissions) => {
       const cookies = parseCookies();
       const token = cookies.token;
 
-      console.log(token == undefined);
-      console.log(typeof(token))
       const isAuthenticated = token;
 
       // Redirect to login page if user is not authenticated
