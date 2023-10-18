@@ -31,7 +31,7 @@ export default function App({
 
   useEffect(() => {
     if(!socket && token ) {
-      const ws = new ReconnectingWebSocket(`ws://localhost:8000/ws/notifications/?token=${token}`);
+      const ws = new ReconnectingWebSocket(`${process.env.NEXT_PUBLIC_WS_URL}/notifications/?token=${token}`);
       ws.addEventListener('open', () => {
         console.log('WebSocket connection opened');
       });
