@@ -49,7 +49,7 @@ function ChangeProfileImage({setOpen, mutate}) {
     })
     .catch((error) => {
       // Handle any errors that occurred during the API request
-      console.error(error);
+      toast.error('Something went wrong.')
     });
   }
   

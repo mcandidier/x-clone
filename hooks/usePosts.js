@@ -41,7 +41,6 @@ const useLike = (postId, userId) => {
         e.stopPropagation();
         try {
             if(isLiked) {
-                console.log('unlike');
                 const res = await API.delete(`tweets/${postId}/unlike/`);
             } else {
                 const res = await API.post(`tweets/${postId}/likes/`);

@@ -14,7 +14,7 @@ import ReconnectingWebSocket from 'reconnecting-websocket';
 
 import { setCurrentUser } from '@/store/user-slice'; 
 import { updateNotification } from '@/store/notification-slice';
-
+import PusherClient from '@/libs/pusher';
 
 
 export default function App({ 
@@ -25,31 +25,44 @@ export default function App({
   const cookies = parseCookies();
   const token = cookies.token;
   const state = store.getState()
-
   const notification =  state.notification;
-  const [socket, setSocket] = useState(null)
+  const [channel, setChannel] = useState(null);
 
   useEffect(() => {
-    if(!socket && token ) {
-      const ws = new ReconnectingWebSocket(`${process.env.NEXT_PUBLIC_WS_URL}/notifications/?token=${token}`);
-      ws.addEventListener('open', () => {
-        console.log('WebSocket connection opened');
+    if(!channel && token ) {
+      const ChannelName = `channel-${token}`;
+      PusherClient.connection.bind('connected', () =>{
+      });
+      const UserChannel = PusherClient.subscribe(ChannelName);
+      setChannel(UserChannel);
+
+      UserChannel.bind("pusher:subscription_succeeded", () => {
+        console.log('connected to', ChannelName);
       });
 
-      ws.addEventListener('message', (event) => {
-        const data = JSON.parse(event.data);
-        const dispatch = store.dispatch;
-        dispatch(updateNotification(data));
+      UserChannel.bind('new:notification', function(data) {
+        store.dispatch(updateNotification(data));
       });
+
+      // const ws = new ReconnectingWebSocket(`${process.env.NEXT_PUBLIC_WS_URL}/notifications/?token=${token}`);
+      // ws.addEventListener('open', () => {
+      //   console.log('WebSocket connection opened');
+      // });
+
+      // ws.addEventListener('message', (event) => {
+      //   const data = JSON.parse(event.data);
+      //   const dispatch = store.dispatch;
+      //   dispatch(updateNotification(data));
+      // });
     }
 
     return () => {
-      if(socket) {
-        socket.disconnect();
-        setSocket(null);
+      if(channel) {
+        channel.unsubscribe(`channel-${token}`)
+        setChannel(null);
       }
-    };
-  }, [])
+    }
+  }, [channel])
 
   if(token && !state.auth) {
     API.get('profiles/').then(res => {

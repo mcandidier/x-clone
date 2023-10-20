@@ -24,8 +24,7 @@ function notifications() {
     }
 
     const messageArray = messages.map((message) => {
-      const messageObj = JSON.parse(message);
-      setNotifications([...notifications, messageObj]);
+      setNotifications([...notifications, message]);
     });
 
     fetchNotifications();

@@ -15,10 +15,8 @@ const useFollow = (userId) => {
     }, [currentUser?.following, mutatedUser]);
 
     const toggleFollow = useCallback( async() => {
-        console.log(isFollowing, 'isFol')
         try {
             if(!isFollowing) {
-                console.log('following');
                 const res = await API.post(`/profiles/${userId}/follow/`, {'action': 'follow'});
             } else {
                 const res = await API.delete(`/profiles/${userId}/unfollow/`);
@@ -27,7 +25,6 @@ const useFollow = (userId) => {
             mutatedUser();
             toast.success('Success');
         } catch (error) {
-            console.log('error')
             toast.error('Something went wrong.');
 
         }

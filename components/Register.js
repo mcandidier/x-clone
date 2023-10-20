@@ -19,7 +19,6 @@ function RegisterModal({setOpen, setOpenRegister}) {
 
 
   const onSubmit = async (data) => {
-    console.log('submit');
     try {
       const res = await API.post('accounts/register/', data);
       setCookie(null, 'token', res.data.token, {
@@ -42,7 +41,6 @@ function RegisterModal({setOpen, setOpenRegister}) {
   }
 
   const handleToggle = () => {
-    console.log('toggle');
     setOpenRegister(false);
     setOpen(true);
   }
