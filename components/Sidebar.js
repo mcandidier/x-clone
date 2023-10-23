@@ -8,10 +8,13 @@ import SidebarItem from './SidebarItem';
 
 import { useSelector } from 'react-redux';
 
-function Sidebar() {
+function Sidebar({setOpen}) {
   const user = useSelector((state) => state.auth);
   const userId = user?.id? user.id :user?.user;
-
+  
+  const handleOpen = () => {
+    setOpen(true);
+  }
 
   const items = [
     {
@@ -59,7 +62,8 @@ function Sidebar() {
                 cursor-pointer
                 transition
               '>
-                <p className='font-semibold flex justify-center align-center'>
+                <p className='font-semibold flex justify-center align-center'
+                  onClick={handleOpen}>
                 Tweet
                 </p>
               </div>

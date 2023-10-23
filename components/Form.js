@@ -13,7 +13,8 @@ import { useComments } from '@/hooks/useComments';
 function Form({
     placeholder, 
     isComment,
-    postId
+    postId,
+    setOpen
 }) {
     
     const user = useSelector(state => state.auth);
@@ -40,6 +41,9 @@ function Form({
             mutatePosts(); 
             mutateComments();
             setBody('')
+            if(setOpen) {
+              setOpen(false);
+            }
         } catch (error) {
             setLoading(false)
             setBody('')
@@ -53,10 +57,10 @@ function Form({
 
 
   return (
-    <div className='border-neutral-800 border-b-[1px] px-5 py-3'>
+    <div className='border-neutral-800 px-5 py-3'>
         <div className='w-full'>
             <textarea
-            className='
+            className={`
             disabled: opacity-80
             peer
             resize-none
@@ -67,19 +71,21 @@ function Form({
             text-[18px]
             placeholder-neutral-500
             text-white
-            '
+           
+            `}
             placeholder={placeholder}
             value={body}
             onChange={handleOnChange}
             />
-            <hr className='
-            opacity-0
+            
+            <hr className={`
+            ${setOpen ? 'opacity-100': 'opacity-0'}
             peer-focus:opacity-100
             h-[1px]
             w- full
             border-neutral-800
             transition
-            '/>
+            `}/>
             <div className='mt-4 flex flex-row justify-end'>
                 <button
                     className='py-2 px-4 mt-6 rounded-full bg-sky-500 hover:bg-opacity-90 cursor-pointer transition

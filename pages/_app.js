@@ -9,7 +9,7 @@ import { parseCookies } from 'nookies';
 import API from '@/libs/api';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import ReconnectingWebSocket from 'reconnecting-websocket';
+// import ReconnectingWebSocket from 'reconnecting-websocket';
 
 
 import { setCurrentUser } from '@/store/user-slice'; 
@@ -41,6 +41,7 @@ export default function App({
       });
 
       UserChannel.bind('new:notification', function(data) {
+        console.log('new data alert', data)
         store.dispatch(updateNotification(data));
       });
 

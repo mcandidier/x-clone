@@ -8,28 +8,8 @@ import { toast } from 'react-hot-toast';
 
 function notifications() {
 
-  const messages = useSelector((state) => state.notification);
-  const [notifications, setNotifications] = useState([]);
-
-
-  useEffect(() => {
-    async function fetchNotifications() {
-      try {
-        const response = await API.get('notifications/');
-        const notifications = response.data;
-        setNotifications(notifications);
-      } catch(err) {
-        toast.error('Something went wrong.')
-      }
-    }
-
-    const messageArray = messages.map((message) => {
-      setNotifications([...notifications, message]);
-    });
-
-    fetchNotifications();
-  },[messages]);
-  
+  const [data, setData] = useState([])
+  const notifications = useSelector((state) => state.notification);
 
   return (
     <>

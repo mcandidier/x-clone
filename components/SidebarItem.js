@@ -1,21 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { destroyCookie } from 'nookies';
 import { resetUser } from '@/store/user-slice';
 import { useDispatch, useSelector } from 'react-redux';
 
-
 function SidebarItem({label, href, icon: Icon, logout}) {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [hasNoti, setHasNoti] = useState(false);
   const messages = useSelector(state => state.notification);
-
-  useEffect(() => {
-    if(messages?.length ) {
-      setHasNoti(true)
-    } 
-  }, [hasNoti, messages])
+  const hasNoti = messages.some(obj => obj.read === false);
 
   const handleClick = () => {
     if(logout) {
